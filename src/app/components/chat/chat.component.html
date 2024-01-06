@@ -1,0 +1,35 @@
+<form class="chat">
+  <header class="header">
+    <img src="assets/icons/chat-logo.png" alt="Chat logo">
+  </header>
+  <section class="body">
+    <ul class="messages">
+      <li>
+        <img src="assets/icons/person.png" alt="Person">
+        <div class="comment">
+          <p>Projeto em construção por Gabriel Cardoso Girarde T.T</p>
+          <span>Gabriel Cardoso</span>
+        </div>
+      </li>
+      <li class="right">
+        <div class="comment">
+          <p>Meu amigo, existe o pelé do futebol e existe eu o pelé do jogo da velha e agora você vai levar chumbo :)</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+  <div class="input">
+    <input type="search" placeholder="Type your message" [formControl]="message">
+    <img src="assets/icons/happy.png" alt="Open emoji area" (click)="toggleEmojiPicker()">
+  </div>
+  @if (showEmojiPicker()) {
+    <div class="emoji-picker">
+      <emoji-mart
+        (emojiClick)="addEmoji($event)"
+        [darkMode]="false"
+        title="Selecione um Emoji"
+      ></emoji-mart>
+    </div>
+    }
+</form>
+

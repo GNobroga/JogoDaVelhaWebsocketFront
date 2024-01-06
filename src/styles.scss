@@ -1,0 +1,25 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: arial,sans-serif
+}
+
+:root {
+  --primary-color: #FFFFFF;
+  --primary-color-010: #F4F6FB;
+  --secondary-color: #6368ED;
+  --third-color: #9F9F9F;
+  --fourth-color: #d6d2bc;;
+}
+
+
+html, body {
+  height: 100%;
+  background-color: #d8dadf6b;
+}
+
+body {
+  padding: 1rem 1.5rem;
+}
+

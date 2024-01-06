@@ -11,6 +11,4 @@ import { JogoDaVelhaComponent } from './components/jogo-da-velha/jogo-da-velha.c
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-
-}
+export class AppComponent {}

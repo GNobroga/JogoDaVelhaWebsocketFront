@@ -2,6 +2,6 @@
 
 (Em construção)
 
-Me deu vontade de aprender sobre websockets por isso tive a ideia de fazer esse projeto. Talvez o layout não esteja ficando bom porque não sou tão criativo, porém o importante é o funcionando.
+Resolvi criar uma simples aplicação que utilizará websockets para se comunicar em tempo real, além de contar com autenticação de usuário. Esse frontend terá comunicação com o projeto que está no repositório -> https://github.com/GNobroga/JogoDaVelhaWebsocketBackend
 
 ![Alt text](image.png)

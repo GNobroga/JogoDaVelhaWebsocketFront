@@ -8,5 +8,9 @@ export const routes: Routes = [
   {
     path: 'game',
     loadComponent: () => import('./pages/game/game.component'),
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./pages/not-found/not-found.component'),
   }
 ];

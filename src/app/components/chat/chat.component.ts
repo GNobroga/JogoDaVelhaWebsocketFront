@@ -21,7 +21,6 @@ export class ChatComponent {
     const currentValue = this.message.value ?? '';
     const newValue = currentValue + event.emoji.native;
     this.message.setValue(newValue)
-    console.log(event.emoji.native);
     this.showEmojiPicker.set(false);
   }
 

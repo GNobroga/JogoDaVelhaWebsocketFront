@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-account',
@@ -10,4 +10,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export default class AccountComponent {
 
+  public modeRegister = signal(false);
+
+  public toggleModeRegister() {
+    this.modeRegister.set(!this.modeRegister());
+  }
 }

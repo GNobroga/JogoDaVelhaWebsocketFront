@@ -9,6 +9,10 @@ Resolvi criar uma simples aplicação que utilizará websockets para se comunica
 ![Alt text](image-1.png)
 
 
+### Tela de Cadastro
+
+![Alt text](image-2.png)
+
 ### Game
 
 ![Alt text](image.png)

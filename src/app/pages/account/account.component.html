@@ -1,5 +1,6 @@
-<form>
-  <section class="login">
+<div class="account" [class.mode-register]="modeRegister()">
+
+  <section class="login" [class.mode-register]="modeRegister()">
     <h1>Account Login</h1>
     <div class="login-input">
       <label>Username</label>
@@ -14,11 +15,15 @@
     </div>
     <button>Log in</button>
   </section>
-  <button class="open-register-view"></button>
-  <section class="register">
+
+  <button class="open-register-view" [class.mode-register]="modeRegister()" (click)="toggleModeRegister()"></button>
+
+  <section class="register" [class.mode-register]="modeRegister()">
     <div class="header">
       <h1>Register account</h1>
-      <button>Close</button>
+      <button (click)="toggleModeRegister()">
+        <img src="assets/icons/cancel.png" alt="">
+      </button>
     </div>
     <div class="register-input">
       <label>Username</label>
@@ -36,5 +41,8 @@
       <label>Email Address</label>
       <input type="text">
     </div>
+    <button>Registrar</button>
   </section>
-</form>
+
+</div>
+

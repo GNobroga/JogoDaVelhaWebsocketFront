@@ -6,13 +6,13 @@ Resolvi criar uma simples aplicação que utilizará websockets para se comunica
 
 ### Tela de Login
 
-![Alt text](image-1.png)
+![Alt text](/src/assets/images/image-1.png)
 
 
 ### Tela de Cadastro
 
-![Alt text](image-2.png)
+![Alt text](/src/assets/images/image-2.png)
 
 ### Game
 
-![Alt text](image.png)
+![Alt text](/src/assets/images/image.png)

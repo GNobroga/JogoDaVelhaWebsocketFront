@@ -7,6 +7,7 @@ import * as signalR from '@microsoft/signalr';
 import { environment } from '../../../environments/environment';
 
 enum ChatAction {
+  CONNECT = "connect",
   SEND_MESSAGE = 'sendMessage',
 }
 
@@ -41,6 +42,6 @@ export default class GameComponent implements OnInit {
         transport: signalR.HttpTransportType.WebSockets,
       })
       .build();
-      this.#connection.start().then(() => this.#connection.send(ChatAction.SEND_MESSAGE, "gabariel"))
+      this.#connection.start().then(() => this.#connection.send(ChatAction.CONNECT, "gabariel"))
   }
 }

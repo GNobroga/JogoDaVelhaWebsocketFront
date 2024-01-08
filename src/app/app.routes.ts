@@ -12,6 +12,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/account/account.component'),
   },
   {
+    path: 'forgot-password',
+    loadComponent: () => import('./pages/account/forgot-password/forgot-password.component'),
+  },
+  {
     path: 'game',
     loadComponent: () => import('./pages/game/game.component'),
   },

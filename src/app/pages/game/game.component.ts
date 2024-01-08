@@ -27,21 +27,18 @@ export default class GameComponent implements OnInit {
 
   public ngOnInit(): void {
     this.#createConnection();
-
     this.#connection.on(ChatAction.SEND_MESSAGE, (message: string) => {
       this.messages.update((oldValue) =>  [...oldValue, message]);
     });
-
   }
 
   #createConnection() {
-    console.log(environment.chatUrl)
     this.#connection = new signalR.HubConnectionBuilder()
       .withUrl(environment.chatUrl, {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
-      })
-      .build();
+      }).build();
+
       this.#connection.start().then(() => this.#connection.send(ChatAction.CONNECT, "gabariel"))
   }
 }

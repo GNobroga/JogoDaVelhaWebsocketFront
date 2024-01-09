@@ -6,13 +6,22 @@ Resolvi criar uma simples aplicação que utilizará websockets para se comunica
 
 ### Tela de Login
 
-![Alt text](/src/assets/images/image-1.png)
+![Alt text](image-1.png)
 
 
 ### Tela de Cadastro
 
-![Alt text](/src/assets/images/image-2.png)
+![Alt text](image-2.png)
+
+
+## Tela Esqueceu a Senha
+
+![Alt text](image-3.png)
+
+Quando o e-mail existir irá aparacer
+
+![Alt text](image-4.png)
 
 ### Game
 
-![Alt text](/src/assets/images/image.png)
+![Alt text](image.png)

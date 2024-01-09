@@ -15,16 +15,21 @@
     border-top-right-radius: 1rem;
     border-top-left-radius: 1rem;
     position: relative;
+    background-color: #75788040;
 
     .header {
       display: flex;
       align-items: center;
 
-      background-color: var(--primary-color);
+      background-color: #55575C;
       padding:  1rem;
       border-top-right-radius: 1rem;
       border-top-left-radius: 1rem;
       gap: 0.5rem;
+
+      img {
+        filter: invert(1);
+      }
 
       h1 {
         font-weight: lighter;
@@ -37,7 +42,6 @@
 
     .body {
       flex: 1;
-
       .messages {
         display: flex;
         list-style: none;
@@ -85,7 +89,7 @@
 
             p {
               @include shadow;
-              background-color: var(--secondary-color);
+              background-color: #757880;
               flex: 1;
               padding: 0.8rem 0.5rem;
               border-radius: 1rem ;

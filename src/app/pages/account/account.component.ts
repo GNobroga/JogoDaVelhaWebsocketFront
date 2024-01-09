@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import IUserLogin from '../../models/IUserLogin';
 import { CommonModule } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
 import { Router, RouterModule } from '@angular/router';
 import { AccountService } from '../../services/account.service';
 import IUserCreate from '../../models/IUserCreate';
@@ -46,7 +45,6 @@ export default class AccountComponent implements OnInit {
       window.history.pushState(null, '');
     }
   }
-
 
   public logIn() {
       this.#authService

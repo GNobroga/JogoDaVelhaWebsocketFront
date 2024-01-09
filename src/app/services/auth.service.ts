@@ -1,5 +1,5 @@
 import { Injectable, effect, inject, signal } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import IToken from '../models/IToken';
 import { catchError, shareReplay, tap } from 'rxjs';
@@ -28,15 +28,18 @@ export class AuthService {
   public login(userLogin: IUserLogin) {
     return this.#httpClient
       .post<IToken>(`${environment.apiUrl}/api/auth`, userLogin)
-      .pipe(shareReplay())
-      .pipe(catchError(err => {
-        console.log(err);
-        this.#toastrService.error(err.error.detail, "Error");
-        return err;
-      }))
-      .pipe(tap((result: any) => {
-        this.token$.set(result.token);
-        this.#toastrService.success("Usuário conectado");
-      }))
+      .pipe(
+        shareReplay(),
+        tap(value => this.#toastrService.success("Login efetuado.")),
+        catchError(this.#showErrors.bind(this)),
+        tap((result: any) => this.token$.set(result.token)));
+  }
+
+  #showErrors(res: any) {
+    const details = res.error.details as string[];
+    for (const detail of details) {
+      this.#toastrService.warning(detail, "Error");
+    }
+    return res;
   }
 }

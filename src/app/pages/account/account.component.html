@@ -4,7 +4,7 @@
     <h1>Account</h1>
     <div class="login-input">
       <label>E-mail</label>
-      <input type="text" name="email" formControlName="email">
+      <input type="email" name="email" formControlName="email">
     </div>
     <div class="login-input">
       <label>Senha</label>
@@ -31,17 +31,17 @@
     </div>
     <div class="register-input">
       <label>Email</label>
-      <input type="text" name="email" formControlName="email">
+      <input type="email" name="email" formControlName="email">
     </div>
     <div class="register-input">
       <label>Senha</label>
-      <input type="text" name="password" formControlName="password">
+      <input type="password" name="password" formControlName="password">
     </div>
     <div class="register-input">
       <label>Senha de confirmação</label>
-      <input type="text" name="confirmPassword" formControlName="confirmPassword">
+      <input type="password" name="confirmPassword" formControlName="confirmPassword">
     </div>
-    <button>Registrar</button>
+    <button (click)="createAccount()">Registrar</button>
   </form>
 
 </div>

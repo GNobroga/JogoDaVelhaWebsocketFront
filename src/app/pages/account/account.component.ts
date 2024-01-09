@@ -5,6 +5,8 @@ import IUserLogin from '../../models/IUserLogin';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
+import { AccountService } from '../../services/account.service';
+import IUserCreate from '../../models/IUserCreate';
 
 @Component({
   selector: 'app-account',
@@ -20,11 +22,11 @@ export default class AccountComponent {
 
   #authService = inject(AuthService);
 
-  #toastrService = inject(ToastrService);
+  #accountService = inject(AccountService);
 
   public login = this.#formBuilder.group({
-    email: ['', [Validators.email, Validators.required]],
-    password: ['', [Validators.required, Validators.min(5), Validators.max(100)]],
+    email: [''],
+    password: [''],
   });
 
   public register = this.#formBuilder.group({
@@ -37,15 +39,21 @@ export default class AccountComponent {
   public modeRegister = signal(false);
 
   public logIn() {
-    if (this.login.valid) {
       this.#authService.login(<IUserLogin> this.login.value).subscribe();
-    } else {
-      for (const control in this.login.controls) {
-        if (this.login.get(control)?.errors) {
-          this.#toastrService.warning(`Há um erro no(a) ${control}`);
-        }
-      }
-    }
+  }
+
+
+  public createAccount() {
+    this.#accountService
+      .create(this.register.value as IUserCreate)
+      .subscribe(value => {
+        this.toggleModeRegister();
+        this.login.setValue({
+          email: value.email,
+          password: this.register.controls.password.value,
+        });
+      });
+
   }
 
   public toggleModeRegister() {

@@ -14,7 +14,17 @@
     position: absolute;
     right: 0;
     width: 100%;
+
+    &::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 15px;
+      background-color: transparent;
+
+    }
+
   }
+
+
 
   .chat {
     height: inherit;
@@ -25,7 +35,8 @@
     position: relative;
     background-color: #75788040;
     border-radius: 1rem;
-    box-shadow: 0 2px 5px #3333336f;
+    box-shadow: 0 2px 5px #3333331d;
+    border: 1px solid #33333322;
 
     .header {
       display: flex;
@@ -78,7 +89,6 @@
             flex: 1;
 
             p {
-              margin: 0;
               background-color: var(--primary-color);
               flex: 1;
               padding: 1rem;
@@ -86,6 +96,10 @@
               word-break: break-all;
               word-wrap: break-word;
               line-height: 1.5rem;
+            }
+
+            span {
+              color: rgba(11, 27, 66, 0.69);
             }
           }
         }
@@ -102,6 +116,7 @@
               @include shadow;
               background-color: #757880;
               flex: 1;
+              margin: 0;
               padding: 1rem;
               border-radius: 1rem ;
               word-break: break-all;

@@ -3,19 +3,27 @@
     <img src="assets/icons/chat-logo.png" alt="Chat logo" />
   </header>
   <section class="body">
-   <div class="scroll">
+   <div class="scroll" #scroll>
     <ul class="messages">
       @for (message of messages(); track message.username) {
         <li [class.right]="message.isMe">
-          <img src="assets/icons/person.png" alt="Person" />
           <div class="comment">
             <p>{{ message.content }}</p>
-            <span>{{ message.username }}</span>
+            @if (!message.isMe) {
+              <span>{{ message.username | uppercase }}</span>
+            }
+            @else {
+              <span>Eu</span>
+            }
           </div>
         </li>
       }
       @empty {
-        <p>Comunique-se</p>
+        <li>
+          <div class="comment">
+            <p>Seja o primeiro a enviar algo :)</p>
+          </div>
+        </li>
       }
     </ul>
    </div>

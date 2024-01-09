@@ -1,8 +1,7 @@
-import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, OnInit, ViewChild, effect, signal } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnInit, ViewChild, effect, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { environment } from '../../../environments/environment';
 import  * as signalR from '@microsoft/signalr';
 import { UpperCasePipe } from '@angular/common';
 
@@ -14,7 +13,6 @@ enum ChatAction {
 interface IUserDetails {
   email: string;
   username: string;
-  token: string;
 }
 
 interface IMessage {
@@ -33,11 +31,13 @@ interface IMessage {
 })
 export class ChatComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('scroll') scrollRef!: ElementRef;
+  @ViewChild('scroll')
+  scrollRef!: ElementRef;
 
   message = new FormControl('', [Validators.required, Validators.min(2)]);
 
-  #connection!: signalR.HubConnection;
+  @Input({ required: true })
+  connection!: signalR.HubConnection;
 
   userDetails = signal<IUserDetails | null>(null);
 
@@ -50,7 +50,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   constructor() {
     effect(() => {
       if (this.userDetails() != null) {
-        this.#createConnection();
+        this.#start();
       }
     });
   }
@@ -64,7 +64,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   @HostListener('document:keypress', ['$event'])
   onKeypress(event: KeyboardEvent) {
     if (event.key === 'Enter' && this.message.valid) {
-      this.#connection.send(ChatAction.SEND_MESSAGE, this.userDetails()!.username, this.message.value);
+      this.connection.send(ChatAction.SEND_MESSAGE, this.userDetails()!.username, this.message.value);
       this.message.setValue('');
       const scroll = this.scroll();
       setTimeout(() => {
@@ -84,17 +84,8 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.showEmojiPicker.set(!this.showEmojiPicker());
   }
 
-  #createConnection() {
-    this.#connection = new signalR.HubConnectionBuilder()
-      .withUrl(environment.chatUrl, {
-        skipNegotiation: true,
-        transport: signalR.HttpTransportType.WebSockets,
-        accessTokenFactory: () => this.userDetails()!.token,
-      }).build();
-
-      this.#connection.start();
-
-      this.#connection.on(ChatAction.SEND_MESSAGE, (username: string, message: string) => {
+  #start() {
+      this.connection.on(ChatAction.SEND_MESSAGE, (username: string, message: string) => {
         const newMessage: IMessage = {
           username,
           content: message,

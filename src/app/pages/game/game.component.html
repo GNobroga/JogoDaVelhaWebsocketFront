@@ -1,6 +1,6 @@
 <div class="container">
   <main>
-    <app-chat />
+    <app-chat [connection]="connection" />
     @if (isReadyToPlay()) {
       <app-jogo-da-velha />
     }

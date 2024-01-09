@@ -24,15 +24,24 @@ export default class GameComponent implements OnInit, AfterViewInit {
 
   #authService = inject(AuthService);
 
+  connection = new signalR.HubConnectionBuilder()
+    .withUrl(environment.chatUrl, {
+      skipNegotiation: true,
+      transport: signalR.HttpTransportType.WebSockets,
+      accessTokenFactory: () => this.#authService.getToken()!,
+    }).build();
+
+
   isReadyToPlay = signal(false);
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+    this.connection.start();
+  }
 
   public ngAfterViewInit(): void {
       this.chatComponent.userDetails.set({
         email: this.#authService.getClaim('sub')!,
         username: this.#authService.getClaim('username')!,
-        token: this.#authService.getToken()!,
       });
   }
 

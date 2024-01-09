@@ -13,7 +13,7 @@
     <div class="forgot-password">
       <a routerLink="/forgot-password">Esqueceu a senha?</a>
     </div>
-    <button (click)="logIn()">Logar</button>
+    <button (click)="logIn()" [disabled]="modeRegister()">Logar</button>
   </form>
 
   <button class="open-register-view" [class.mode-register]="modeRegister()" (click)="toggleModeRegister()"></button>

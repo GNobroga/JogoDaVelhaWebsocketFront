@@ -33,6 +33,8 @@ export default class ForgotPasswordComponent {
     if (this.isEmailConfirmed())
       this.#accountService
       .forgotAccount(this.form.value as IForgotAccount)
-      .subscribe(_ => this.#router.navigate(['/account']))
+      .subscribe(_ => this.#router.navigate(['/account'], { state: {
+        email: this.form.controls.email.value
+      }}))
   }
 }

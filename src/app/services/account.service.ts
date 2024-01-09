@@ -22,7 +22,7 @@ export class AccountService {
       .post<IUserCreate>(`${environment.apiUrl}/account/create-account`, record)
       .pipe(
         shareReplay(),
-        tap(value => this.#toastrService.success("Cadastrado realizado.")),
+        tap(() => this.#toastrService.success("Cadastrado realizado.")),
         catchError(this.#showErrors.bind(this))
       ) as Observable<IUserCreate>;
   }
@@ -32,7 +32,7 @@ export class AccountService {
       .patch<IUserCreate>(`${environment.apiUrl}/account/forgot-account`, info)
       .pipe(
         catchError(this.#showErrors.bind(this)),
-        tap(value => this.#toastrService.success("Senha modificada."))
+        tap(() => this.#toastrService.success("Senha modificada."))
       );
   }
 
@@ -51,7 +51,7 @@ export class AccountService {
   }
 
   #showErrors(res: any) {
-    const details = res.error.details as string[];
+    const details = res.error?.details as string[];
     for (const detail of details) {
       this.#toastrService.warning(detail, "Error");
     }

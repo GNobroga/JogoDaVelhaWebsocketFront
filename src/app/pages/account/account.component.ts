@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import IUserLogin from '../../models/IUserLogin';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AccountService } from '../../services/account.service';
 import IUserCreate from '../../models/IUserCreate';
 
@@ -16,13 +16,15 @@ import IUserCreate from '../../models/IUserCreate';
   styleUrl: './account.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class AccountComponent {
+export default class AccountComponent implements OnInit {
 
   #formBuilder = inject(FormBuilder);
 
   #authService = inject(AuthService);
 
   #accountService = inject(AccountService);
+
+  #router = inject(Router);
 
   public login = this.#formBuilder.group({
     email: [''],
@@ -38,8 +40,18 @@ export default class AccountComponent {
 
   public modeRegister = signal(false);
 
+  public ngOnInit(): void {
+    if (window.history.state?.email) {
+      this.login.patchValue({ email: window.history.state.email });
+      window.history.pushState(null, '');
+    }
+  }
+
+
   public logIn() {
-      this.#authService.login(<IUserLogin> this.login.value).subscribe();
+      this.#authService
+        .login(<IUserLogin> this.login.value)
+        .subscribe(() => this.#router.navigate(['/game']));
   }
 
 

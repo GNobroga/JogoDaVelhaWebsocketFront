@@ -57,6 +57,16 @@ export class AuthService implements OnInit {
     return localStorage.getItem(TOKEN_KEY);
   }
 
+  public getClaim(type: string): string | null {
+    const entries = Object.entries(this.#jwtHelper.decodeToken(this.getToken()!));
+    for (const [key, value] of entries) {
+      if (key === type) {
+        return <string> value;
+      }
+    }
+    return null;
+  }
+
   public isTokenValid(token: string) {
     return this.getToken() != null && !this.#jwtHelper.isTokenExpired(this.getToken());
   }

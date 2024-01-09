@@ -3,23 +3,22 @@
     <img src="assets/icons/chat-logo.png" alt="Chat logo" />
   </header>
   <section class="body">
+   <div class="scroll">
     <ul class="messages">
-      <li>
-        <img src="assets/icons/person.png" alt="Person" />
-        <div class="comment">
-          <p>Projeto em construção por Gabriel Cardoso Girarde T.T</p>
-          <span>Gabriel Cardoso</span>
-        </div>
-      </li>
-      <li class="right">
-        <div class="comment">
-          <p>
-            Meu amigo, existe o pelé do futebol e existe eu o pelé do jogo da
-            velha e agora você vai levar chumbo :)
-          </p>
-        </div>
-      </li>
+      @for (message of messages(); track message.username) {
+        <li [class.right]="message.isMe">
+          <img src="assets/icons/person.png" alt="Person" />
+          <div class="comment">
+            <p>{{ message.content }}</p>
+            <span>{{ message.username }}</span>
+          </div>
+        </li>
+      }
+      @empty {
+        <p>Comunique-se</p>
+      }
     </ul>
+   </div>
   </section>
   <div class="input">
     <input

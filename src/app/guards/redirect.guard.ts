@@ -1,18 +1,16 @@
-import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { inject } from '@angular/core';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const redirectGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
-  const token = authService.getToken();
   const router = inject(Router);
+  const token = authService.getToken();
   const isValid = authService.isTokenValid(token!);
 
   if (isValid) {
-    return true;
+    router.navigate(['/game']);
   }
-
-  router.navigate(['/account']);
 
   return !isValid;
 };

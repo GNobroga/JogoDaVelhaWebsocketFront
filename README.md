@@ -11,14 +11,14 @@ Resolvi criar uma simples aplicação que utilizará websockets para se comunica
 
 ### Tela de Cadastro
 
-![Alt text](image-2.png)
+![Alt text](image-5.png)
 
 
 ## Tela Esqueceu a Senha
 
 ![Alt text](image-3.png)
 
-Quando o e-mail existir irá aparacer
+Quando o e-mail existir irá aparacer o campo de senha e de confirmação. Obs: Eu não estou trabalhando com a ideia de enviar email. A ideia é se o e-mail existir poder alterar a senha.
 
 ![Alt text](image-4.png)
 

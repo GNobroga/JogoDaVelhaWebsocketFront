@@ -2,7 +2,7 @@
 
 (Em construção)
 
-Resolvi criar uma simples aplicação que utilizará websockets para se comunicar em tempo real, além de contar com autenticação de usuário. Esse frontend terá comunicação com o projeto que está no repositório -> https://github.com/GNobroga/JogoDaVelhaWebsocketBackend
+Resolvi criar uma simples aplicação que utilizará websockets (projeto 100% meu e criado do zero) para se comunicar em tempo real, além de contar com autenticação de usuário. Esse frontend terá comunicação com o projeto que está no repositório -> https://github.com/GNobroga/JogoDaVelhaWebsocketBackend
 
 ### Tela de Login
 
@@ -24,4 +24,11 @@ Quando o e-mail existir irá aparacer o campo de senha e de confirmação. Obs: 
 
 ### Game
 
-![Alt text](src/assets/images/image.png)
+O usuário vai digitar o e-mail de quem quer convidar para jogar.
+
+![Alt text](src/assets/images/jogo1.jpg)
+
+Caso ele aceite o jogo irá começar.
+
+![Alt text](src/assets/images/jogo2.jpg)
+

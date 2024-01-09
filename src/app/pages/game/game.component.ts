@@ -25,6 +25,8 @@ export default class GameComponent implements OnInit {
 
   #connection!: signalR.HubConnection;
 
+  isReadyToPlay = signal(false);
+
   public ngOnInit(): void {
     this.#createConnection();
     this.#connection.on(ChatAction.SEND_MESSAGE, (message: string) => {

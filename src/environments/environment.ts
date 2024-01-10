@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   apiUrl: '',
-  chatUrl: ''
+  chatUrl: '',
+  gameUrl: '',
 };
 

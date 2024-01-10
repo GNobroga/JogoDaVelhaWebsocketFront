@@ -1,8 +1,8 @@
 <div class="container">
   <main>
-    <app-chat [connection]="connection" />
+    <app-chat [connection]="chatConnection" />
     @if (isReadyToPlay()) {
-      <app-jogo-da-velha />
+      <app-jogo-da-velha [connection]="gameConnection" [userDetails]="user"/>
     }
     @else {
       <aside class="invite">
@@ -12,8 +12,8 @@
           Divirta-se e que vença o melhor!
         </p>
         <div class="invite-input">
-          <input type="email" placeholder="E-mail" />
-          <button>Convidar</button>
+          <input type="email" placeholder="E-mail" name="email" [formControl]="email"/>
+          <button (click)="invite()">Convidar</button>
         </div>
       </aside>
     }

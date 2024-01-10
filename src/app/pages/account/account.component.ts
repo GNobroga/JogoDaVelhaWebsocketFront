@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import IUserLogin from '../../models/IUserLogin';
@@ -13,10 +19,9 @@ import IUserCreate from '../../models/IUserCreate';
   imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './account.component.html',
   styleUrl: './account.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class AccountComponent implements OnInit {
-
   #formBuilder = inject(FormBuilder);
 
   #authService = inject(AuthService);
@@ -47,23 +52,21 @@ export default class AccountComponent implements OnInit {
   }
 
   public logIn() {
-      this.#authService
-        .login(<IUserLogin> this.login.value)
-        .subscribe(() => this.#router.navigate(['/game']));
+    this.#authService
+      .login(<IUserLogin>this.login.value)
+      .subscribe(() => this.#router.navigate(['/game']));
   }
-
 
   public createAccount() {
     this.#accountService
       .create(this.register.value as IUserCreate)
-      .subscribe(value => {
+      .subscribe((value) => {
         this.toggleModeRegister();
         this.login.setValue({
           email: value.email,
           password: this.register.controls.password.value,
         });
       });
-
   }
 
   public toggleModeRegister() {

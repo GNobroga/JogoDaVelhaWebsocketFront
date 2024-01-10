@@ -4,11 +4,7 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import  * as signalR from '@microsoft/signalr';
 import { UpperCasePipe } from '@angular/common';
-
-enum ChatAction {
-  CONNECT = "connect",
-  SEND_MESSAGE = 'sendMessage',
-}
+import { ChatActionType } from '../../enums/ChatActionType';
 
 interface IUserDetails {
   email: string;
@@ -32,20 +28,20 @@ interface IMessage {
 export class ChatComponent implements OnInit, AfterViewInit {
 
   @ViewChild('scroll')
-  scrollRef!: ElementRef;
+  public scrollRef!: ElementRef;
 
-  message = new FormControl('', [Validators.required, Validators.min(2)]);
+  public message = new FormControl('', [Validators.required, Validators.min(2)]);
 
   @Input({ required: true })
-  connection!: signalR.HubConnection;
+  public connection!: signalR.HubConnection;
 
-  userDetails = signal<IUserDetails | null>(null);
+  public userDetails = signal<IUserDetails | null>(null);
 
-  scroll = signal<HTMLDivElement | null>(null);
+  public scroll = signal<HTMLDivElement | null>(null);
 
-  messages = signal<IMessage[]>([]);
+  public messages = signal<IMessage[]>([]);
 
-  showEmojiPicker = signal(false);
+  public showEmojiPicker = signal(false);
 
   constructor() {
     effect(() => {
@@ -55,16 +51,16 @@ export class ChatComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit() {}
+  public ngOnInit() {}
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.scroll.set(this.scrollRef.nativeElement);
   }
 
   @HostListener('document:keypress', ['$event'])
-  onKeypress(event: KeyboardEvent) {
+  public onKeypress(event: KeyboardEvent) {
     if (event.key === 'Enter' && this.message.valid) {
-      this.connection.send(ChatAction.SEND_MESSAGE, this.userDetails()!.username, this.message.value);
+      this.connection.send(ChatActionType.SEND_MESSAGE, this.userDetails()!.username, this.message.value);
       this.message.setValue('');
       const scroll = this.scroll();
       setTimeout(() => {
@@ -73,25 +69,29 @@ export class ChatComponent implements OnInit, AfterViewInit {
     }
   }
 
-  addEmoji(event: EmojiEvent) {
+  public addEmoji(event: EmojiEvent) {
     const currentValue = this.message.value ?? '';
     const newValue = currentValue + event.emoji.native;
     this.message.setValue(newValue)
     this.showEmojiPicker.set(false);
   }
 
-  toggleEmojiPicker() {
+  public toggleEmojiPicker() {
     this.showEmojiPicker.set(!this.showEmojiPicker());
   }
 
   #start() {
-      this.connection.on(ChatAction.SEND_MESSAGE, (username: string, message: string) => {
+      this.connection.on(ChatActionType.SEND_MESSAGE, (username: string, message: string) => {
         const newMessage: IMessage = {
           username,
           content: message,
           isMe: username === this.userDetails()!.username,
         };
         this.messages.update((oldValue) =>  [...oldValue, newMessage]);
+        const scroll = this.scroll();
+        setTimeout(() => {
+          scroll!.scrollTop = scroll?.scrollHeight! - scroll?.clientHeight!
+        }, 100);
       });
   }
 }

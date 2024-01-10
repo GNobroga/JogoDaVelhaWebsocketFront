@@ -1,6 +1,6 @@
 <div class="container">
-  <main>
-    <app-chat [connection]="chatConnection" />
+  <main [class.is-game]="isReadyToPlay()" [class.is-not-game]="!isReadyToPlay()">
+    <app-chat [connection]="chatConnection" class="chat"/>
     @if (isReadyToPlay()) {
       <app-jogo-da-velha [connection]="gameConnection" [userDetails]="user"/>
     }

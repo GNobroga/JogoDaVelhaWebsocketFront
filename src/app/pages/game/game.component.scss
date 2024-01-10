@@ -71,13 +71,20 @@
       gap: 5rem;
       align-items: center;
 
-      @media only screen and (max-width: 50rem) {
+      @media only screen and (max-width: 60rem) {
         grid-template-columns: 1fr;
-
         gap: 0;
 
-        .invite {
-          display: none;
+        &.is-not-game {
+          .invite {
+            display: none;
+          }
+        }
+
+        &.is-game {
+          .chat {
+            display: none;
+          }
         }
       }
 

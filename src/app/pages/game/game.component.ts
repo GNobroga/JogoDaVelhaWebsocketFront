@@ -130,11 +130,16 @@ export default class GameComponent implements OnInit, AfterViewInit {
           this.#toastrService.success(message);
         } else if (type === 'WARNING') {
           this.#toastrService.warning(message);
+        } else if (type === 'WINNER') {
+          window.alert(message);
+          this.isReadyToPlay.set(false);
         } else {
           this.#toastrService.success(message);
         }
       }
     );
+
+
   }
 
   public invite() {

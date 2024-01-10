@@ -66,6 +66,7 @@ export default class GameComponent implements OnInit, AfterViewInit {
         }
 
         if (this.#authService.closeWebSockets()) {
+          window.alert("LIMPAR")
           this.gameConnection.send(GameActionType.DISCONNECT, this.user().email);
           this.gameConnection.stop();
           this.chatConnection.stop();
@@ -112,7 +113,7 @@ export default class GameComponent implements OnInit, AfterViewInit {
       (invite: string, sender: string) => {
         const result = this.#dialog.open(DialogComponent, {
           data: { message: invite },
-          width: '50vw',
+          width: '30vw',
         });
         result.afterClosed().subscribe((result) => {
           if (result) {

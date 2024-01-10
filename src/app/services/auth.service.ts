@@ -37,6 +37,7 @@ export class AuthService implements OnInit {
   }
 
   public login(userLogin: IUserLogin) {
+    this.closeWebSockets.set(false);
     return this.#httpClient
       .post<IToken>(`${environment.apiUrl}/api/auth`, userLogin)
       .pipe(

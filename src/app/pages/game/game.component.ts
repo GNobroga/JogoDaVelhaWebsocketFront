@@ -33,7 +33,7 @@ import { DialogComponent } from '../../modules/shared/components/dialog/dialog.c
     JogoDaVelhaComponent,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
@@ -53,13 +53,20 @@ export default class GameComponent implements OnInit, AfterViewInit {
   isConfirmedEmail = signal(false);
 
   constructor() {
-    effect(() => {
-      if (this.isConfirmedEmail()) {
-        this.gameConnection.send(GameActionType.SEND_INVITE, this.user().email, this.email.value);
-        this.email.setValue('');
-        this.isConfirmedEmail.set(false);
-      }
-    }, { allowSignalWrites: true });
+    effect(
+      () => {
+        if (this.isConfirmedEmail()) {
+          this.gameConnection.send(
+            GameActionType.SEND_INVITE,
+            this.user().email,
+            this.email.value
+          );
+          this.email.setValue('');
+          this.isConfirmedEmail.set(false);
+        }
+      },
+      { allowSignalWrites: true }
+    );
   }
 
   user = signal({
@@ -94,31 +101,40 @@ export default class GameComponent implements OnInit, AfterViewInit {
       .start()
       .then(() => this.gameConnection.send(GameActionType.CONNECT, username));
 
-    this.gameConnection.on(GameActionType.RECEIVE_INVITE, (invite: string, sender: string) => {
-      const result = this.#dialog.open(DialogComponent, { data: { message: invite }, width: '50vw' });
-      result.afterClosed().subscribe(result => {
-        if (result) {
-          this.gameConnection.send('startGame', email, sender);
+    this.gameConnection.on(
+      GameActionType.RECEIVE_INVITE,
+      (invite: string, sender: string) => {
+        const result = this.#dialog.open(DialogComponent, {
+          data: { message: invite },
+          width: '50vw',
+        });
+        result.afterClosed().subscribe((result) => {
+          if (result) {
+            this.gameConnection.send('startGame', email, sender);
+            this.isReadyToPlay.set(true);
+          } else {
+            this.#toastrService.warning('Convite recusado');
+            this.gameConnection.send('sendRefuseToPlayer', username, sender)
+          }
+        });
+      }
+    );
+
+    this.gameConnection.on(
+      GameActionType.RECEIVE_MESSAGE,
+      (type: string, message: string) => {
+        if (type === 'ERROR') {
+          this.#toastrService.warning(message);
+        } else if (type === 'RECONNECT') {
           this.isReadyToPlay.set(true);
+          this.#toastrService.success(message);
+        } else if (type === 'WARNING') {
+          this.#toastrService.warning(message);
         } else {
-          this.#toastrService.warning("Convite recusado");
+          this.#toastrService.success(message);
         }
-      });
-    });
-
-    this.gameConnection.on(GameActionType.RECEIVE_ERROR_MESSAGE, (error: string) => {
-      this.#toastrService.warning(error);
-    });
-
-    this.gameConnection.on(GameActionType.RECEIVE_MESSAGE, (message: string) => {
-      this.#toastrService.success(message);
-    });
-
-    this.gameConnection.on(GameActionType.RECONNECT, (message: string) => {
-      this.isReadyToPlay.set(true);
-      this.#toastrService.success(message);
-    });
-
+      }
+    );
   }
 
   public invite() {

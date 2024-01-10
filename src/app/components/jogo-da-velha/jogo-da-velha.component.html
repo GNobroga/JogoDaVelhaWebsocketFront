@@ -1,17 +1,17 @@
 <div class="jogo-da-velha">
   <header class="header">
-    <h1 class="player">Você é o X</h1>
-    <h1 class="round">Vez do O</h1>
+    <h1 class="player">Você é o {{ roundValue() }}</h1>
+    <h1 class="round">Vez do {{ currentRoundValue() }}</h1>
   </header>
   <div class="board">
-    <div class="o">O</div>
-    <div class="x">X</div>
-    <div class="x">X</div>
-    <div class="x">X</div>
-    <div class="x">X</div>
-    <div class="o">O</div>
-    <div class="o">O</div>
-    <div class="o">O</div>
-    <div class="x">X</div>
+    @for (item of table(); let i = $index; track table) {
+    <div
+      [class.x]="item == 'X'"
+      [class.o]="item == 'O'"
+      (click)="markTable(tableRowsAndCols[i].row, tableRowsAndCols[i].col)"
+    >
+      {{ item }}
+    </div>
+    }
   </div>
 </div>

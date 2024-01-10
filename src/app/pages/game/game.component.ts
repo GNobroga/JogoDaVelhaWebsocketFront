@@ -64,6 +64,12 @@ export default class GameComponent implements OnInit, AfterViewInit {
           this.email.setValue('');
           this.isConfirmedEmail.set(false);
         }
+
+        if (this.#authService.closeWebSockets()) {
+          this.gameConnection.send(GameActionType.DISCONNECT, this.user().email);
+          this.gameConnection.stop();
+          this.chatConnection.stop();
+        }
       },
       { allowSignalWrites: true }
     );

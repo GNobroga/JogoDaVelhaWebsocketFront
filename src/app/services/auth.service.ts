@@ -20,6 +20,8 @@ export class AuthService implements OnInit {
 
   #jwtHelper = inject(JwtHelperService);
 
+  closeWebSockets = signal(false);
+
   public token$ = signal<string | null>(null);
 
   constructor() {
@@ -42,6 +44,11 @@ export class AuthService implements OnInit {
         tap(() => this.#toastrService.success("Login efetuado.")),
         catchError(this.#showErrors.bind(this)),
         tap((result: any) => this.token$.set(result.token)));
+  }
+
+  public logout() {
+    this.closeWebSockets.set(true);
+    this.clearToken();
   }
 
   public clearToken() {

@@ -3,7 +3,7 @@
   height: 100%;
 
   @mixin shadow {
-    box-shadow: 0 2px 2px #33333396;
+    box-shadow: 0 2px 2px #33333348;
   }
 
   .scroll {
@@ -31,7 +31,7 @@
     flex-direction: column;
     padding-bottom: 1rem;
     position: relative;
-    background-color: #75788040;
+    background-color: #f5ecec77;
     border-radius: 1rem;
     box-shadow: 0 2px 5px #33333327;
     border: 1px solid #33333358;
@@ -39,14 +39,23 @@
     .header {
       display: flex;
       align-items: center;
-      background-color: #55575C;
+      justify-content: space-between;
+      background-color: #484a90;
       padding:  1rem;
       border-top-right-radius: 1rem;
       border-top-left-radius: 1rem;
       gap: 0.5rem;
 
       img {
-        filter: invert(1);
+        width: 32px;
+      }
+
+      img:nth-child(2) {
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.1);
+        }
       }
 
       h1 {

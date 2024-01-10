@@ -6,4 +6,5 @@ export enum GameActionType {
   RECEIVE_PLAYER_VALUE = 'receiveRoundKey',
   RECEIVE_ROUND = 'receiveRound',
   UPDATE_TABLE = 'updateTable',
+  DISCONNECT = 'disconnect',
 }

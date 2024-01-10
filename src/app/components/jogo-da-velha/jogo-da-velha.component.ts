@@ -42,12 +42,10 @@ export class JogoDaVelhaComponent implements OnInit {
 
   public ngOnInit(): void {
     this.connection.on(GameActionType.RECEIVE_PLAYER_VALUE, (value: string) => {
-      console.log("AQUII");
       this.roundValue.set(value);
     });
 
     this.connection.on(GameActionType.RECEIVE_ROUND, (round: string) => {
-      console.log("AQUII");
       this.currentRoundValue.set(round);
     });
 

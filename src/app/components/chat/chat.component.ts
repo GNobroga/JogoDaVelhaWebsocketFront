@@ -1,10 +1,12 @@
-import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnInit, ViewChild, effect, signal } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnInit, ViewChild, effect, inject, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import  * as signalR from '@microsoft/signalr';
 import { UpperCasePipe } from '@angular/common';
 import { ChatActionType } from '../../enums/ChatActionType';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 interface IUserDetails {
   email: string;
@@ -34,6 +36,10 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   @Input({ required: true })
   public connection!: signalR.HubConnection;
+
+  #authService = inject(AuthService);
+
+  #router = inject(Router);
 
   public userDetails = signal<IUserDetails | null>(null);
 
@@ -93,5 +99,10 @@ export class ChatComponent implements OnInit, AfterViewInit {
           scroll!.scrollTop = scroll?.scrollHeight! - scroll?.clientHeight!
         }, 100);
       });
+  }
+
+  public logout() {
+    this.#authService.clearToken();
+    this.#router.navigate(['/account']);
   }
 }
